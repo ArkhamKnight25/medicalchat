@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import ChatBox from './ChatBox';
-import InputForm from './InputForm';
-import './Chat.css';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { useEffect, useState } from "react";
+import ChatBox from "./ChatBox";
+import InputForm from "./InputForm";
+import "./Chat.css";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 interface Message {
   role: string;
@@ -16,25 +16,25 @@ interface ChatProps {
 
 const Chat: React.FC<ChatProps> = ({ chatId, chatName }) => {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [userInput, setUserInput] = useState('');
+  const [userInput, setUserInput] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log('chatId', chatId);
+    console.log("chatId", chatId);
     const savedMessages = JSON.parse(
-      localStorage.getItem(`chat-${chatId}`) || '[]'
+      localStorage.getItem(`chat-${chatId}`) || "[]"
     );
     setMessages(savedMessages);
   }, [chatId]);
 
   useEffect(() => {
-    console.log('messages', messages);
+    console.log("messages", messages);
     localStorage.setItem(`chat-${chatId}`, JSON.stringify(messages));
   }, [messages]);
 
   const inference = async () => {
     setLoading(true);
-    
+
     try {
       const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
@@ -54,9 +54,9 @@ Keep responses concise and under 1000 words.`;
       // Create conversation history
       let conversationHistory = systemPrompt + "\n\nConversation:\n";
       messages.forEach((msg) => {
-        if (msg.role === 'user') {
+        if (msg.role === "user") {
           conversationHistory += `User: ${msg.content}\n`;
-        } else if (msg.role === 'system') {
+        } else if (msg.role === "system") {
           conversationHistory += `Assistant: ${msg.content}\n`;
         }
       });
@@ -68,26 +68,27 @@ Keep responses concise and under 1000 words.`;
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-          role: 'system',
+          role: "system",
           content: text || `Sorry, I'm having trouble understanding right now.`,
         },
       ]);
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       setMessages((prevMessages) => [
         ...prevMessages,
         {
-          role: 'system',
-          content: 'Some error has occurred. Please check your API key and try again.',
+          role: "system",
+          content:
+            "Some error has occurred. Please check your API key and try again.",
         },
       ]);
     }
-    
+
     setLoading(false);
   };
 
   useEffect(() => {
-    if (messages.length > 0 && messages[messages.length - 1].role === 'user') {
+    if (messages.length > 0 && messages[messages.length - 1].role === "user") {
       inference();
     }
   }, [messages]);
@@ -96,17 +97,17 @@ Keep responses concise and under 1000 words.`;
     if (event) event.preventDefault();
     if (!userInput.trim()) return;
     let input = userInput;
-    setUserInput('');
+    setUserInput("");
 
     setMessages((prevMessages) => [
       ...prevMessages,
-      { role: 'user', content: input },
+      { role: "user", content: input },
     ]);
   };
 
   return (
-    <div className='chat-container'>
-      <h2 style={{ marginTop: '5px' }}>{chatName}</h2>
+    <div className="chat-container">
+      <h2 style={{ marginTop: "5px" }}>{chatName}</h2>
       <ChatBox messages={messages} loading={loading} />
       <InputForm
         userInput={userInput}

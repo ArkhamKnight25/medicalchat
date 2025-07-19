@@ -13,23 +13,28 @@ A React + TypeScript + Vite application that provides AI-powered medical assista
 ## Setup
 
 1. **Clone the repository and install dependencies:**
+
    ```bash
    npm install
    ```
 
 2. **Get a Gemini API key:**
+
    - Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
    - Create a new API key
    - Copy your API key
 
 3. **Configure environment variables:**
+
    - Copy `.env.example` to `.env`
    - Replace `your_gemini_api_key_here` with your actual Gemini API key:
+
    ```
    VITE_GEMINI_API_KEY=your_actual_api_key_here
    ```
 
 4. **Run the development server:**
+
    ```bash
    npm run dev
    ```
@@ -42,6 +47,7 @@ A React + TypeScript + Vite application that provides AI-powered medical assista
 ## API Integration
 
 This application uses Google's Gemini 1.5 Flash model for generating medical assistance responses. The AI is specifically prompted to:
+
 - Provide accurate medical information
 - Suggest consulting healthcare professionals for serious issues
 - Decline non-medical queries
@@ -50,6 +56,7 @@ This application uses Google's Gemini 1.5 Flash model for generating medical ass
 ## Development
 
 ### Tech Stack
+
 - React 18
 - TypeScript
 - Vite
@@ -57,11 +64,12 @@ This application uses Google's Gemini 1.5 Flash model for generating medical ass
 - CSS Modules
 
 ### Project Structure
+
 ```
 src/
 ├── components/
 │   ├── Chat.tsx          # Main chat interface
-│   ├── ChatBox.tsx       # Message display component  
+│   ├── ChatBox.tsx       # Message display component
 │   ├── ChatHistory.tsx   # Chat sessions sidebar
 │   ├── InputForm.tsx     # Message input form
 │   └── NavBar.tsx        # Navigation bar
